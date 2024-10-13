@@ -32,10 +32,11 @@ public class WheelBlock extends HorizontalKineticBlock implements IBE<WheelBlock
         return !facing.getAxis().isVertical();
     }
 
+    /* TODO
     @Override
     public @NotNull PushReaction getPistonPushReaction(@NotNull BlockState state) {
         return PushReaction.BLOCK;
-    }
+    }*/
 
     @Override
     public boolean hasShaftTowards(LevelReader world, BlockPos pos, BlockState state, Direction face) {

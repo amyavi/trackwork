@@ -1,12 +1,10 @@
 package edn.stratodonut.trackwork;
 
 import com.simibubi.create.foundation.config.ConfigBase;
-import com.simibubi.create.infrastructure.config.AllConfigs;
+import fuzs.forgeconfigapiport.api.config.v2.ForgeConfigRegistry;
+import fuzs.forgeconfigapiport.api.config.v2.ModConfigEvents;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.EnumMap;
@@ -57,26 +55,27 @@ public class TrackworkConfigs {
         return config;
     }
 
-    public static void register(ModLoadingContext context) {
+    public static void register() {
         server = register(TServer::new, ModConfig.Type.SERVER);
         client = register(TClient::new, ModConfig.Type.CLIENT);
 
         for (Map.Entry<ModConfig.Type, ConfigBase> pair : CONFIGS.entrySet())
-            context.registerConfig(pair.getKey(), pair.getValue().specification);
+            ForgeConfigRegistry.INSTANCE.register(TrackworkMod.MOD_ID, pair.getKey(), pair.getValue().specification);
+
+        ModConfigEvents.loading(TrackworkMod.MOD_ID).register(TrackworkConfigs::onLoad);
+        ModConfigEvents.reloading(TrackworkMod.MOD_ID).register(TrackworkConfigs::onReload);
     }
 
-    @SubscribeEvent
-    public static void onLoad(ModConfigEvent.Loading event) {
+    public static void onLoad(ModConfig modConfig) {
         for (ConfigBase config : CONFIGS.values())
-            if (config.specification == event.getConfig()
+            if (config.specification == modConfig
                     .getSpec())
                 config.onLoad();
     }
 
-    @SubscribeEvent
-    public static void onReload(ModConfigEvent.Reloading event) {
+    public static void onReload(ModConfig modConfig) {
         for (ConfigBase config : CONFIGS.values())
-            if (config.specification == event.getConfig()
+            if (config.specification == modConfig
                     .getSpec())
                 config.onReload();
     }

@@ -15,6 +15,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
@@ -141,7 +142,7 @@ public class SuspensionTrackBlockEntity extends TrackBaseBlockEntity implements 
             if (blockstate.getRenderShape() != RenderShape.INVISIBLE) {
                 Vector3dc speed = this.ship.get().getShipTransform().getShipToWorldRotation().transform(getActionVec3d(this.getBlockState().getValue(AXIS), this.getSpeed()));
                 this.level.addParticle(new BlockParticleOption(
-                        ParticleTypes.BLOCK, blockstate).setPos(blockpos),
+                        ParticleTypes.BLOCK, blockstate).setSourcePos(blockpos),
                         pos.x + (this.random.nextDouble() - 0.5D),
                         pos.y + 0.25D,
                         pos.z + (this.random.nextDouble() - 0.5D) * this.wheelRadius,
@@ -200,7 +201,7 @@ public class SuspensionTrackBlockEntity extends TrackBaseBlockEntity implements 
                 float wheelTravelDelta = (float) Math.abs(this.wheelTravel - (suspensionTravel + restOffset));
                 this.prevWheelTravel = this.wheelTravel;
                 this.wheelTravel = (float) (suspensionTravel + restOffset);
-                if (wheelTravelDelta > 0.01f) TrackPackets.getChannel().send(packetTarget(), new SuspensionWheelPacket(this.getBlockPos(), this.wheelTravel));
+                if (wheelTravelDelta > 0.01f) TrackPackets.getChannel().sendToClientsTracking(new SuspensionWheelPacket(this.getBlockPos(), this.wheelTravel), (ServerLevel) level, worldPosition);
 
                 // Entity Damage
                 // TODO: Players don't get pushed, why?
@@ -226,7 +227,7 @@ public class SuspensionTrackBlockEntity extends TrackBaseBlockEntity implements 
     @Override
     public void lazyTick() {
         super.lazyTick();
-        if (this.assembled && !this.level.isClientSide && this.ship.get() != null) TrackPackets.getChannel().send(packetTarget(), new SuspensionWheelPacket(this.getBlockPos(), this.wheelTravel));
+        if (this.assembled && !this.level.isClientSide && this.ship.get() != null) TrackPackets.getChannel().sendToClientsTracking(new SuspensionWheelPacket(this.getBlockPos(), this.wheelTravel), (ServerLevel)level, worldPosition);
     }
 
     public record ClipResult(Vector3dc trackTangent, Vec3 suspensionLength, @Nullable Long groundShipId) { ; }

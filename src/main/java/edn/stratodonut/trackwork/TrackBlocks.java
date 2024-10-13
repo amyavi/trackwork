@@ -26,8 +26,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.level.material.MapColor;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Map;
-
 import static com.simibubi.create.foundation.data.TagGen.axeOrPickaxe;
 import static edn.stratodonut.trackwork.TrackworkMod.REGISTRATE;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
@@ -35,7 +33,7 @@ import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
 public class TrackBlocks {
     static {
-        REGISTRATE.setCreativeTab(AllCreativeModeTabs.BASE_CREATIVE_TAB);
+        REGISTRATE.setCreativeTab(AllCreativeModeTabs.BASE_CREATIVE_TAB.key());
     }
 
     // TODO: More Freeform Rigid tracks (like a massive wall of blocks)

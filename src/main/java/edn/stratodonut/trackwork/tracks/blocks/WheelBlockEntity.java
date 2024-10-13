@@ -17,6 +17,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
@@ -124,7 +125,7 @@ public class WheelBlockEntity extends KineticBlockEntity {
             if (blockstate.getRenderShape() != RenderShape.INVISIBLE) {
                 Vector3dc speed = this.ship.get().getShipTransform().getShipToWorldRotation().transform(TrackBaseBlockEntity.getActionVec3d(this.getBlockState().getValue(HORIZONTAL_FACING).getAxis(), this.getSpeed()));
                 this.level.addParticle(new BlockParticleOption(
-                                ParticleTypes.BLOCK, blockstate).setPos(blockpos),
+                                ParticleTypes.BLOCK, blockstate).setSourcePos(blockpos),
                         pos.x + (this.random.nextDouble() - 0.5D),
                         pos.y + 0.25D,
                         pos.z + (this.random.nextDouble() - 0.5D) * this.wheelRadius,
@@ -204,7 +205,7 @@ public class WheelBlockEntity extends KineticBlockEntity {
                 float newWheelTravel = (float) (suspensionTravel + restOffset);
                 float delta = newWheelTravel - wheelTravel;
                 if (delta < -0.667) {
-                    this.level.playSound(null, this.getBlockPos(), SUSPENSION_CREAK.get(), SoundSource.BLOCKS, Math.max(1.0f, Math.abs(delta * (this.getWheelSpeed() / 256))), 0.8F + 0.4F * this.random.nextFloat());
+                    this.level.playSound(null, this.getBlockPos(), SUSPENSION_CREAK, SoundSource.BLOCKS, Math.max(1.0f, Math.abs(delta * (this.getWheelSpeed() / 256))), 0.8F + 0.4F * this.random.nextFloat());
                 }
 
                 this.prevWheelTravel = this.wheelTravel;
@@ -289,8 +290,9 @@ public class WheelBlockEntity extends KineticBlockEntity {
     }
 
     protected void syncToClient() {
-        if (!this.level.isClientSide) TrackPackets.getChannel().send(packetTarget(),
-                new SimpleWheelPacket(this.getBlockPos(), this.wheelTravel, this.getSteeringValue(), this.horizontalOffset));
+        if (!this.level.isClientSide) TrackPackets.getChannel().sendToClientsTracking(
+                new SimpleWheelPacket(this.getBlockPos(), this.wheelTravel, this.getSteeringValue(), this.horizontalOffset),
+                (ServerLevel)this.level, worldPosition);
     }
 
     protected static Vec3 getActionNormal(Direction.Axis axis) {

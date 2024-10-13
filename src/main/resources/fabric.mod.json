@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "trackwork",
+  "version": "${version}",
+
+  "name": "Trackwork Mod",
+  "description": "Adds track blocks that work with VS2 physics.\nWarranty void if suspension springs are compressed",
+  "authors": ["Endalion"],
+  "license": "MIT",
+  "icon": "assets/trackwork/icon.png",
+
+  "entrypoints": {
+    "main": ["edn.stratodonut.trackwork.TrackworkMod"],
+    "client": ["edn.stratodonut.trackwork.TrackworkMod"]
+  },
+  "mixins": ["trackwork.mixins.json"],
+
+  "depends": {
+    "java": ">=${java_version}",
+    "fabricloader": ">=${fabric_loader_version}",
+    "minecraft": "${minecraft_version}",
+    "fabric-api": ">=${fabric_api_version}",
+
+    "create": ">=${create_version}",
+    "valkyrienskies": ">=${valkyrienskies_version}"
+  }
+}

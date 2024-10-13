@@ -11,6 +11,7 @@ import edn.stratodonut.trackwork.tracks.render.TrackBeltRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -74,7 +75,7 @@ public abstract class TrackBaseBlockEntity extends KineticBlockEntity implements
             }
         }
 
-        TrackPackets.getChannel().send(packetTarget(), new ThrowTrackPacket(this.getBlockPos(), this.detracked));
+        TrackPackets.getChannel().sendToClientsTracking(new ThrowTrackPacket(this.getBlockPos(), this.detracked), (ServerLevel) this.level, worldPosition);
     }
 
     private @Nullable BlockPos nextTrackPosition(BlockState state, BlockPos pos, boolean forward) {

@@ -1,0 +1,27 @@
+[versions]
+java = "17"
+minecraft = "1.20.1"
+fabric-loom = "1.8.9"
+fabric-loader = "0.16.7"
+fabric-api = "0.92.2+1.20.1"
+
+portinglib = "2.3.4+1.20.1"
+create = "0.5.1-f-build.1417+mc1.20.1"
+valkyrienskies-core = "1.1.0+b19b27c4a4"
+valkyrienskies-fabric = "2.3.0-beta.5+ab16a4469e"
+
+[libraries]
+minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }
+fabric-loader = { module = "net.fabricmc:fabric-loader", version.ref = "fabric-loader" }
+fabric-api = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-api" }
+
+portinglib-blocks = { module = "io.github.fabricators_of_create.Porting-Lib:blocks", version.ref = "portinglib" }
+create = { module = "com.simibubi.create:create-fabric-1.20.1", version.ref = "create" }
+valkyrienskies-core-api = { module = "org.valkyrienskies.core:api", version.ref = "valkyrienskies-core" }
+valkyrienskies-core-impl = { module = "org.valkyrienskies.core:impl", version.ref = "valkyrienskies-core" }
+valkyrienskies-core-api-game = { module = "org.valkyrienskies.core:api-game", version.ref = "valkyrienskies-core" }
+valkyrienskies-core-util = { module = "org.valkyrienskies.core:util", version.ref = "valkyrienskies-core" }
+valkyrienskies-fabric = { module = "org.valkyrienskies:valkyrienskies-120-fabric", version.ref = "valkyrienskies-fabric" }
+
+[plugins]
+fabric-loom = { id = "fabric-loom", version.ref = "fabric-loom" }

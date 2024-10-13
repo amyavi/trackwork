@@ -11,6 +11,8 @@ import com.simibubi.create.foundation.utility.Iterate;
 import com.simibubi.create.foundation.utility.Lang;
 import edn.stratodonut.trackwork.TrackworkConfigs;
 import edn.stratodonut.trackwork.tracks.ITrackPointProvider;
+import io.github.fabricators_of_create.porting_lib.block.WeakPowerCheckingBlock;
+import io.github.fabricators_of_create.porting_lib.blocks.extensions.OnExplodedBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.StringRepresentable;
@@ -29,7 +31,8 @@ import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class TrackBaseBlock<BE extends TrackBaseBlockEntity> extends RotatedPillarKineticBlock implements ITransformableBlock, IBE<BE> {
+public abstract class TrackBaseBlock<BE extends TrackBaseBlockEntity> extends RotatedPillarKineticBlock implements ITransformableBlock, IBE<BE>,
+        WeakPowerCheckingBlock, OnExplodedBlock {
 
     public static final Property<TrackPart> PART = EnumProperty.create("part", TrackPart.class);
     public static final BooleanProperty CONNECTED_ALONG_FIRST_COORDINATE =
@@ -61,9 +64,7 @@ public abstract class TrackBaseBlock<BE extends TrackBaseBlockEntity> extends Ro
     public void onBlockExploded(BlockState state, Level level, BlockPos pos, Explosion explosion) {
         if (TrackworkConfigs.server().enableTrackThrow.get()) {
             this.withBlockEntityDo(level, pos, be -> be.throwTrack(false));
-        }
-
-        super.onBlockExploded(state, level, pos, explosion);
+        };
     }
 
     @Override
@@ -71,10 +72,11 @@ public abstract class TrackBaseBlock<BE extends TrackBaseBlockEntity> extends Ro
         super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
     }
 
+    /* TODO
     @Override
     public @NotNull PushReaction getPistonPushReaction(@NotNull BlockState state) {
         return PushReaction.BLOCK;
-    }
+    }*/
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {

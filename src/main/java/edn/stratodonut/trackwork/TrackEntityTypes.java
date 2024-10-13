@@ -4,6 +4,7 @@ import edn.stratodonut.trackwork.tracks.TrackBeltEntity;
 import edn.stratodonut.trackwork.tracks.render.TrackBeltEntityRenderer;
 import edn.stratodonut.trackwork.wheel.WheelEntity;
 import com.tterrag.registrate.util.entry.EntityEntry;
+import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.MobCategory;
 import org.valkyrienskies.mod.client.EmptyRenderer;
 
@@ -13,9 +14,9 @@ public class TrackEntityTypes {
 
     public static final EntityEntry<WheelEntity> WHEEL =
             REGISTRATE.entity("wheel_entity", WheelEntity::new, MobCategory.MISC)
-                    .properties(b -> b.setTrackingRange(10)
-                            .setUpdateInterval(1)
-                            .sized(.3f, .3f)
+                    .properties(b -> b.trackRangeChunks(10)
+                            .trackedUpdateRate(1)
+                            .dimensions(EntityDimensions.fixed(.3f, .3f))
                             .fireImmune()
                     )
                     .renderer(() -> EmptyRenderer::new)
@@ -23,9 +24,9 @@ public class TrackEntityTypes {
 
     public static final EntityEntry<TrackBeltEntity> BELT =
             REGISTRATE.entity("track_belt_entity", TrackBeltEntity::new, MobCategory.MISC)
-                    .properties(b -> b.setTrackingRange(10)
-                            .setUpdateInterval(1)
-                            .sized(1f, 1f)
+                    .properties(b -> b.trackRangeChunks(10)
+                            .trackedUpdateRate(1)
+                            .dimensions(EntityDimensions.fixed(1f, 1f))
                             .fireImmune()
                     )
                     .renderer(() -> TrackBeltEntityRenderer::new)
