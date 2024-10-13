@@ -17,6 +17,11 @@ out
 build
 .gradle
 
+# gradle wrapper
+/gradle/wrapper/gradle-wrapper.jar
+/gradlew
+/gradlew.bat
+
 # other
 eclipse
 run
