@@ -34,8 +34,6 @@ java {
     val javaVersion = JavaVersion.toVersion(libs.versions.java.get())
     sourceCompatibility = javaVersion
     targetCompatibility = javaVersion
-
-    toolchain.languageVersion.set(JavaLanguageVersion.of(libs.versions.java.get()))
 }
 
 tasks.processResources {
