@@ -48,7 +48,7 @@ public abstract class TrackBaseBlock<BE extends TrackBaseBlockEntity> extends Ro
     }
 
     public TrackBaseBlock(Properties properties) {
-        super(properties);
+        super(properties.pushReaction(PushReaction.BLOCK));
     }
 
     public static boolean isValidAxis(Direction.Axis axis) {
@@ -71,12 +71,6 @@ public abstract class TrackBaseBlock<BE extends TrackBaseBlockEntity> extends Ro
     public void onRemove(BlockState pState, Level pLevel, BlockPos pPos, BlockState pNewState, boolean pIsMoving) {
         super.onRemove(pState, pLevel, pPos, pNewState, pIsMoving);
     }
-
-    /* TODO
-    @Override
-    public @NotNull PushReaction getPistonPushReaction(@NotNull BlockState state) {
-        return PushReaction.BLOCK;
-    }*/
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {

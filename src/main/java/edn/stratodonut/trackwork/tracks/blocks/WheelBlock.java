@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class WheelBlock extends HorizontalKineticBlock implements IBE<WheelBlockEntity> {
     public WheelBlock(Properties properties) {
-        super(properties);
+        super(properties.pushReaction(PushReaction.BLOCK));
     }
 
     @Override
@@ -31,12 +31,6 @@ public class WheelBlock extends HorizontalKineticBlock implements IBE<WheelBlock
     public static boolean isValid(Direction facing) {
         return !facing.getAxis().isVertical();
     }
-
-    /* TODO
-    @Override
-    public @NotNull PushReaction getPistonPushReaction(@NotNull BlockState state) {
-        return PushReaction.BLOCK;
-    }*/
 
     @Override
     public boolean hasShaftTowards(LevelReader world, BlockPos pos, BlockState state, Direction face) {
