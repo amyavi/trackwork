@@ -3,8 +3,7 @@
   "package": "edn.stratodonut.trackwork.mixin",
   "compatibilityLevel": "JAVA_${java_version}",
   "mixins": [
-    "MixinRotationPropagator",
-    "MixinServerGamePacketListenerImplDuck"
+    "MixinRotationPropagator"
   ],
   "injectors": {
     "defaultRequire": 1

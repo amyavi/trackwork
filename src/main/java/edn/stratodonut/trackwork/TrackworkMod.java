@@ -4,6 +4,10 @@ import com.mojang.logging.LogUtils;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.item.TooltipHelper;
+
+import edn.stratodonut.trackwork.client.ClientEvents;
+import edn.stratodonut.trackwork.client.TrackworkPartialModels;
+import edn.stratodonut.trackwork.client.TrackworkSpriteShifts;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.resources.ResourceLocation;
@@ -25,13 +29,13 @@ public class TrackworkMod implements ModInitializer, ClientModInitializer
     @Override
     public void onInitialize() {
         TrackworkConfigs.register();
+        TrackSounds.register();
         TrackCreativeTabs.register();
         TrackworkItems.register();
         TrackBlocks.register();
         TrackBlockEntityTypes.register();
         TrackEntityTypes.register();
         TrackPackets.registerPackets();
-        TrackSounds.register();
 
         REGISTRATE.register();
 
@@ -43,6 +47,7 @@ public class TrackworkMod implements ModInitializer, ClientModInitializer
         TrackPonders.register();
         TrackworkPartialModels.init();
         TrackworkSpriteShifts.init();
+        ClientEvents.register();
 
         TrackPackets.getChannel().initClientListener();
     }

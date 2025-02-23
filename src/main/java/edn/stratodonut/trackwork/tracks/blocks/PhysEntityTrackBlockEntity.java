@@ -1,11 +1,10 @@
 package edn.stratodonut.trackwork.tracks.blocks;
 
 import com.mojang.datafixers.util.Pair;
+import com.simibubi.create.foundation.sound.SoundScapes;
 import com.simibubi.create.foundation.utility.Lang;
-import edn.stratodonut.trackwork.TrackEntityTypes;
-import edn.stratodonut.trackwork.TrackPonders;
-import edn.stratodonut.trackwork.TrackworkConfigs;
-import edn.stratodonut.trackwork.TrackworkMod;
+import edn.stratodonut.trackwork.*;
+import edn.stratodonut.trackwork.sounds.TrackSoundScapes;
 import edn.stratodonut.trackwork.tracks.ITrackPointProvider;
 import edn.stratodonut.trackwork.tracks.TrackBeltEntity;
 import edn.stratodonut.trackwork.tracks.data.PhysEntityTrackData;
@@ -23,7 +22,9 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+
 import org.jetbrains.annotations.NotNull;
+import org.joml.Math;
 import org.joml.Quaterniond;
 import org.joml.Vector3d;
 import org.joml.Vector3dc;
@@ -166,7 +167,7 @@ public class PhysEntityTrackBlockEntity extends TrackBaseBlockEntity implements 
         double attachCompliance = 1e-8;
         double attachMaxForce = 1e150;
         double hingeMaxForce = 1e75;
-        Vector3dc axis = getAxisAsVec(this.getBlockState().getValue(AXIS));
+        Vector3dc axis = TrackworkUtil.getAxisAsVec(this.getBlockState().getValue(AXIS));
 //                VSSlideConstraint slider = new VSSlideConstraint(
 //                        ship.getId(),
 //                        wheelId,
@@ -260,6 +261,14 @@ public class PhysEntityTrackBlockEntity extends TrackBaseBlockEntity implements 
         }
     }
 
+    @Override
+    public void tickAudio() {
+        float spd = Math.abs(getSpeed());
+        float pitch = Mth.clamp((spd / 256f) + .45f, .85f, 1f);
+        if (spd < 8)
+            return;
+        TrackSoundScapes.play(TrackAmbientGroups.TRACK_SPROCKET_AMBIENT, worldPosition, pitch);
+    }
 
 //    @Override
 //    public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
@@ -355,7 +364,7 @@ public class PhysEntityTrackBlockEntity extends TrackBaseBlockEntity implements 
     }
 
     public float calculateStressApplied(float mass) {
-        double impact = (mass / 1000) * TrackworkConfigs.server().stressMult.get() * (2.0f * this.wheelRadius);
+        double impact = (mass / 1000) * TrackworkConfigs.server().stressMult.get() * (2.0f * this.wheelRadius) * 8;
         if (impact < 0) {
             impact = 0;
         }

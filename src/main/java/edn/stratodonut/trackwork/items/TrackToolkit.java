@@ -93,12 +93,13 @@ public class TrackToolkit extends Item {
                     } else if (be instanceof WheelBlockEntity wbe) {
                         Ship ship = VSGameUtilsKt.getShipObjectManagingPos(level, context.getClickedPos());
                         if (ship == null) return InteractionResult.FAIL;
-                        wbe.setHorizontalOffset(VectorConversionsMCKt.toJOML(context.getClickLocation().subtract(Vec3.atCenterOf(context.getClickedPos()))));
+                        wbe.setOffset(VectorConversionsMCKt.toJOML(context.getClickLocation().subtract(Vec3.atCenterOf(context.getClickedPos()))),
+                                context.getClickedFace());
 
                         return InteractionResult.SUCCESS;
                     }
                 }
-                default -> {
+                case STIFFNESS -> {
                     Block hitBlock = level.getBlockState(pos).getBlock();
 
                     player.playSound(TrackSounds.SPRING_TOOL, 1.0f, 0.8f + 0.4f * player.getRandom().nextFloat());

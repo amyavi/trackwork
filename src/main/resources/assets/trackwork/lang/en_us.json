@@ -8,6 +8,8 @@
   "block.trackwork.track_level_controller" : "Suspension Controller",
   "block.trackwork.simple_wheel": "Simple Wheel",
   "block.trackwork.simple_wheel_part": "Simple Wheel Part",
+  "block.trackwork.med_simple_wheel": "Medium Simple Wheel",
+  "block.trackwork.med_simple_wheel_part": "Medium Simple Wheel Part",
 
   "itemGroup.trackwork": "Trackwork",
   "item.trackwork.track_tool_kit" : "Track Toolkit",
@@ -17,8 +19,14 @@
   "item.trackwork.track_tool_kit.tooltip.condition2" : "When the power wrench is used,",
   "item.trackwork.track_tool_kit.tooltip.summary" : "Multiple tools for working with tracks, packed into one convenient kit!",
 
+  "block.trackwork.med_simple_wheel.tooltip.summary" : "Proprietary Final Drive technology allows this to reach the same speeds as the larger wheel!",
+
   "death.attack.trackwork.run_over" : "%1$s became roadkill",
   "death.attack.trackwork.run_over.player" : "%1$s was thrown under the bus by %2$s",
+
+  "subtitle.trackwork.ambient.track.sprocket" : "Tracks squeak",
+  "subtitle.trackwork.ambient.track.ground" : "Tracks crunch",
+  "subtitle.trackwork.ambient.wheel.ground" : "Wheels roll",
 
   "trackwork.ponder.tracks.header" : "Building Tracks 101",
   "trackwork.ponder.tracks.text_1" : "Disclaimer: Tracks only work on assembled VS2 ships!",
